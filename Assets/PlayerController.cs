@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     public float playerSpeed;
     public float rotationSpeed;
     public Camera cam;
+    public GameObject bulletPoint;
     void Start()
     {
         
@@ -26,5 +27,19 @@ public class PlayerController : MonoBehaviour
         // Cam Rotation
         float mouseY = Input.GetAxis("Mouse Y") * rotationSpeed;
         cam.transform.Rotate(-mouseY, 0f, 0f);
+
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(bulletPoint.transform.position, bulletPoint.transform.forward, out hit, 100f))
+            {
+                GameObject enemyhit = hit.collider.gameObject;
+                if (enemyhit.tag == "Enemy")
+                {
+                    Destroy(enemyhit);
+                }
+            }
+        }
     }
 }
